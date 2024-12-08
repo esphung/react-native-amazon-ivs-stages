@@ -6,6 +6,17 @@
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
+  "sdkVersion": {
+    "ios": {
+      "AmazonIVSChat": "1.0.0",
+      "AmazonIVSBroadcast/Stages": "1.24.0"
+    },
+    "android": {
+      "com.amazonaws:ivs-broadcast": "1.24.0",
+      "com.amazonaws:ivs-chat-messaging": "1.1.0",
+      "com.google.code.gson:gson": "2.10.1"
+    }
+  },
   "exports": {
     ".": {
       "import": {
@@ -43,21 +54,16 @@
     "example:install": "yarn workspace react-native-amazon-ivs-stages-example install",
     "example:start": "yarn workspace react-native-amazon-ivs-stages-example start --reset-cache",
     "example:ios": "yarn workspace react-native-amazon-ivs-stages-example ios",
+    "example:android": "yarn workspace react-native-amazon-ivs-stages-example android",
     "example:pods": "(cd example/ios && pod install --repo-update)",
     "example:workspace": "open example/ios/AmazonIVSStagesExample.xcworkspace",
-    "example:clean": "sh .scripts/clean-project.sh",
+    "example:clean": "sh ./.scripts/clean-project.sh",
+    "clean:android": "(cd example/android && ./gradlew clean)",
     "test": "npx jest",
     "typecheck": "npx tsc",
     "lint": "npx eslint \"**/*.{js,ts,tsx}\"",
     "prepare": "npx bob build",
     "release": "npx release-it"
-  },
-  "sdkVersion": {
-    "ios": {
-      "AmazonIVSChat": "1.0.0",
-      "AmazonIVSBroadcast/Stages": "1.24.0"
-    },
-    "android": "1.7.2"
   },
   "keywords": [
     "react-native",

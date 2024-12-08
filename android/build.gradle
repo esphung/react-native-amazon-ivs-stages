@@ -1,3 +1,5 @@
+import groovy.json.JsonSlurper
+
 buildscript {
   // Buildscript is evaluated before everything else so we can't use getExtOrDefault
   def kotlin_version = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") : project.properties["AmazonIvsStages_kotlinVersion"]
@@ -47,6 +49,14 @@ def supportsNamespace() {
   return (major == 7 && minor >= 3) || major >= 8
 }
 
+def rootPkgJsonFile = file('../package.json')
+def pkgJsonData = new JsonSlurper().parseText(rootPkgJsonFile.text)
+
+// SDK versions
+def amazonIvsBroadcastStages = pkgJsonData.sdkVersion.android["com.amazonaws:ivs-broadcast"]
+def amazonIvsChat = pkgJsonData.sdkVersion.android["com.amazonaws:ivs-chat-messaging"]
+def googleGson = pkgJsonData.sdkVersion.android["com.google.code.gson:gson"]
+
 android {
   if (supportsNamespace()) {
     namespace "com.amazonivsstages"
@@ -95,5 +105,12 @@ dependencies {
   //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  
+  // Stages SDK
+  implementation "com.amazonaws:ivs-broadcast:$amazonIvsBroadcastStages:stages@aar"
+
+  // Chat SDK
+  implementation "com.amazonaws:ivs-chat-messaging:$amazonIvsChat"
+  implementation "com.google.code.gson:gson:$googleGson"
 }
 
