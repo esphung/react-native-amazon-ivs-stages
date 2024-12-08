@@ -38,4 +38,7 @@ Pod::Spec.new do |s|
       s.dependency "ReactCommon/turbomodule/core"
     end
   end
+
+  s.dependency "AmazonIVSChat", "~> #{package["sdkVersion"]["ios"]["AmazonIVSChat"]}"
+  s.dependency "AmazonIVSBroadcast/Stages", "~> #{package["sdkVersion"]["ios"]["AmazonIVSBroadcast/Stages"]}"
 end

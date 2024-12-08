@@ -1,7 +1,8 @@
 {
   "name": "react-native-amazon-ivs-stages",
-  "version": "0.1.0",
-  "description": "react native library for amazon ivs stages",
+  "version": "0.0.1",
+  "description": "React Native library for Amazon IVS Stages",
+  "summary": "React Native library for Amazon IVS Stages",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
@@ -37,13 +38,26 @@
     "!**/.*"
   ],
   "scripts": {
+    "bundle:install": "(cd example && bundle install)",
     "example": "yarn workspace react-native-amazon-ivs-stages-example",
-    "test": "jest",
-    "typecheck": "tsc",
-    "lint": "eslint \"**/*.{js,ts,tsx}\"",
-    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
-    "prepare": "bob build",
-    "release": "release-it"
+    "example:install": "yarn workspace react-native-amazon-ivs-stages-example install",
+    "example:start": "yarn workspace react-native-amazon-ivs-stages-example start --reset-cache",
+    "example:ios": "yarn workspace react-native-amazon-ivs-stages-example ios",
+    "example:pods": "(cd example/ios && pod install --repo-update)",
+    "example:workspace": "open example/ios/AmazonIVSStagesExample.xcworkspace",
+    "example:clean": "sh .scripts/clean-project.sh",
+    "test": "npx jest",
+    "typecheck": "npx tsc",
+    "lint": "npx eslint \"**/*.{js,ts,tsx}\"",
+    "prepare": "npx bob build",
+    "release": "npx release-it"
+  },
+  "sdkVersion": {
+    "ios": {
+      "AmazonIVSChat": "1.0.0",
+      "AmazonIVSBroadcast/Stages": "1.24.0"
+    },
+    "android": "1.7.2"
   },
   "keywords": [
     "react-native",
