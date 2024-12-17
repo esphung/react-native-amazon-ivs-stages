@@ -1,6 +1,6 @@
 {
   "name": "react-native-amazon-ivs-stages",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "description": "React Native library for Amazon IVS Stages",
   "summary": "React Native library for Amazon IVS Stages",
   "source": "./src/index.tsx",
@@ -129,7 +129,6 @@
   },
   "release-it": {
     "git": {
-      "tagName": "v${version}",
       "commit": true,
       "commitMessage": "chore: release v${version}"
     },
@@ -138,10 +137,13 @@
       "ignoreVersion": true
     },
     "github": {
-      "release": true
+      "release": true,
+      "web": true,
+      "autoGenerate": true,
+      "releaseName": "v${version}"
     },
     "hooks": {
-      "before:bump": "echo Update these values ${version} => ${latestVersion}"
+      "before:bump": "sh ./.scripts/increase-build-number.sh ${version} ${latestVersion}"
     }
   },
   "eslintConfig": {
