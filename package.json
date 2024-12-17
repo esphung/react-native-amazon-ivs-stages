@@ -139,11 +139,6 @@
     "github": {
       "release": true
     },
-    "plugins": {
-      "@release-it/conventional-changelog": {
-        "preset": "angular"
-      }
-    },
     "hooks": {
       "before:bump": "echo Update these values ${version} => ${latestVersion}"
     }
