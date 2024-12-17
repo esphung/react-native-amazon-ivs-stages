@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import { Command, type IIVSBroadcastCameraView, type IIVSBroadcastCameraViewProps } from './IVSBroadcastCameraView.types';
 export declare const NATIVE_VIEW_NAME = "RCTIVSBroadcastCameraView";
 export declare const getCommandIdByPlatform: (command: Command) => number | "" | Command | undefined;

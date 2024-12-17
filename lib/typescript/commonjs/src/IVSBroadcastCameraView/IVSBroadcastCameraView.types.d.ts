@@ -70,7 +70,7 @@ export interface IAudioStats {
     readonly peak: number;
     readonly rms: number;
 }
-interface IVideoConfig {
+export interface IVideoConfig {
     readonly width?: number;
     readonly height?: number;
     readonly bitrate?: number;

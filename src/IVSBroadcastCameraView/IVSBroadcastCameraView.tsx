@@ -84,7 +84,7 @@ const IVSBroadcastCameraView = forwardRef<
     ) =>
       UIManager.dispatchViewManagerCommand(
         reactTag,
-        getCommandIdByPlatform(command),
+        getCommandIdByPlatform(command) || 'START',
         params ?? []
       );
 

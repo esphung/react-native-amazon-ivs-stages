@@ -1,14 +1,16 @@
 pre-commit:
-  parallel: true
   commands:
-    lint:
-      glob: "*.{js,ts,jsx,tsx}"
-      run: npx eslint {staged_files}
-    types:
-      glob: "*.{js,ts, jsx, tsx}"
-      run: npx tsc
+    eslint:
+      run: yarn lint
+    type-check:
+      run: yarn typecheck
+    unit-test:
+      run: yarn test
+    prepare:
+      run: yarn prepare
+    pre-commit:
+      run: yarn precommit
 commit-msg:
-  parallel: true
   commands:
-    commitlint:
+    lint-commit-msg:
       run: npx commitlint --edit

@@ -56,11 +56,13 @@
     "example:ios:pod": "(cd ./example/ios && RCT_NEW_ARCH_ENABLED=1 pod install --repo-update)",
     "example:ios:run": "(cd ./example/ios && npx react-native run-ios)",
     "example:ios:workspace": "open ./example/ios/AmazonIVSStagesExample.xcworkspace",
+    "example:android:wrapper": "(cd ./example/android && ./gradlew wrapper)",
     "test": "npx jest",
     "typecheck": "npx tsc",
     "lint": "npx eslint \"**/*.{js,ts,tsx}\"",
     "prepare": "npx bob build",
-    "release": "npx release-it"
+    "release": "npx release-it",
+    "precommit": "yarn lint && yarn typecheck && yarn test && yarn prepare && yarn pack && git add ."
   },
   "keywords": [
     "react-native",
@@ -100,7 +102,7 @@
     "react-native-builder-bob": "^0.35.2",
     "release-it": "^17.10.0",
     "turbo": "^1.10.7",
-    "typescript": "^5.2.2"
+    "typescript": "5.1.6"
   },
   "resolutions": {
     "@types/react": "^18.2.44"
@@ -127,11 +129,12 @@
   },
   "release-it": {
     "git": {
-      "commitMessage": "chore: release ${version}",
-      "tagName": "v${version}"
+      "tagName": "v${version}",
+      "commit": true,
+      "commitMessage": "chore: release v${version}"
     },
     "npm": {
-      "publish": true
+      "publish": false
     },
     "github": {
       "release": true
@@ -140,6 +143,9 @@
       "@release-it/conventional-changelog": {
         "preset": "angular"
       }
+    },
+    "hooks": {
+      "before:bump": "echo Update these values ${version} => ${latestVersion}"
     }
   },
   "eslintConfig": {
@@ -202,5 +208,8 @@
     "type": "legacy-module",
     "languages": "kotlin-swift",
     "version": "0.45.3"
+  },
+  "dependencies": {
+    "react-native-uuid": "^2.0.3"
   }
 }

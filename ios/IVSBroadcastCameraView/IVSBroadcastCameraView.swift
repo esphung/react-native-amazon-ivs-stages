@@ -92,7 +92,7 @@ class IVSBroadcastCameraView: UIView {
   }
 
   @objc
-  private func audioSessionInterrupted(_ notification: Notification) {
+  private func audioSessionInterrupted(_ notification: NSNotification) {
     guard let userInfo = notification.userInfo,
           let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
           let type = AVAudioSession.InterruptionType(rawValue: typeValue)
@@ -109,12 +109,12 @@ class IVSBroadcastCameraView: UIView {
   }
   
   @objc
-  private func mediaServicesWereLost(_ notification: Notification) {
+  private func mediaServicesWereLost(_ notification: NSNotification) {
     self.onMediaServicesWereLost?([:])
   }
   
   @objc
-  private func mediaServicesWereReset(_ notification: Notification) {
+  private func mediaServicesWereReset(_ notification: NSNotification) {
     self.onMediaServicesWereReset?([:])
   }
   

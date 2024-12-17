@@ -48,5 +48,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+    <key>NSCameraUsageDescription</key>
+    <string>Camera is required for video streaming</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Microphone is required for video streaming</string>
 </dict>
 </plist>
