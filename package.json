@@ -1,6 +1,6 @@
 {
   "name": "react-native-amazon-ivs-stages",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "React Native library for Amazon IVS Stages",
   "summary": "React Native library for Amazon IVS Stages",
   "source": "./src/index.tsx",
