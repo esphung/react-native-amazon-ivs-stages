@@ -7,7 +7,7 @@ import com.facebook.react.uimanager.ViewManager
 
 class AmazonIvsStagesPackage : ReactPackage {
   override fun createNativeModules(reactContext: ReactApplicationContext): List<NativeModule> {
-    return listOf(AmazonIvsStagesModule(reactContext), IVSBroadcastCameraViewManager())
+    return listOf(AmazonIvsStagesModule(reactContext))
   }
 
   override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {

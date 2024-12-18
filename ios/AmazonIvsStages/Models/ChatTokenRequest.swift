@@ -34,7 +34,7 @@ struct ChatTokenRequest: Codable {
 
     func fetchResponse() async throws -> Data {
         print("ℹ Requesting new chat auth token")
-        guard let url = URL(string: "\(Constants.API_URL)/chat/auth") else {
+        guard let url = URL(string: "\(getApiUrl())/chat/auth") else {
             print("❌ Server url not set in Constats.swift")
             throw TokenRequestError.serverNotSet
         }

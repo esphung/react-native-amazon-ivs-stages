@@ -168,7 +168,7 @@ class Server: NSObject, ObservableObject {
     }
 
     private func send(_ method: String, endpoint: String, body: String?, onComplete: @escaping (Bool, Data?, String?) -> Void) {
-        guard let url = URL(string: "\(Constants.API_URL)/\(endpoint)") else {
+        guard let url = URL(string: "\(getApiUrl())/\(endpoint)") else {
             delegate?.didEmitError(error: "Server url not set in Constats.swift")
             return
         }

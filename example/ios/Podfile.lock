@@ -1246,7 +1246,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-amazon-ivs-stages (0.0.2):
+  - react-native-amazon-ivs-stages (0.0.3):
     - AmazonIVSBroadcast/Stages (~> 1.24.0)
     - AmazonIVSChat (~> 1.0.0)
     - DoubleConversion
@@ -1782,7 +1782,7 @@ SPEC CHECKSUMS:
   React-logger: 09934f68c9c8bf4b427addd641f4cae341564d61
   React-Mapbuffer: 6385e4446caaaa433decaa94f398ad3f593cfc05
   React-microtasksnativemodule: e5e9a87d630359490359f7143215987254af65a8
-  react-native-amazon-ivs-stages: ab206f3d1547742df6f0820e1405079aa10dc487
+  react-native-amazon-ivs-stages: 0b89bcf164cb6295be106d996729ff7f172a48b2
   React-nativeconfig: 2199ff468fce8b95d1776d9cea31d35076fe7e48
   React-NativeModulesApple: 3fd0069e45be0a560ed52f57ce8d8c42898f69b8
   React-perflogger: ab4e872853e59282b94df46f17c84d83290579e4

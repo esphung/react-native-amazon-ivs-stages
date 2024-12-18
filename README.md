@@ -55,6 +55,8 @@ How to add this library to your React Native app
 
 #### For iOS
 
+Drag the `Assets.xcassets` contents from the iOS SDK demo (or the example app located in this repo) to your Xcode project. Without them there will be no colors or graphics
+
 Create a `./ios/AmazonIvsStages.plist` file and add your api url
 
 ```plist
@@ -67,6 +69,14 @@ Create a `./ios/AmazonIvsStages.plist` file and add your api url
 </dict>
 </plist>
 ```
+
+After you've created the file:
+
+- Click your project
+- Click your target
+- Select Build Phases
+- Expand Copy Bundle Resources
+- Click '+' and select your file.
 
 #### For Android
 
