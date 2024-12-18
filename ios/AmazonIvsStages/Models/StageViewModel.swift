@@ -671,4 +671,23 @@ class StageViewModel: NSObject, ObservableObject {
         modifier(&participant)
         participantsData[index] = participant
     }
+
+    @objc(joinAsParticipant:withResolver:withRejecter:)
+    func joinAsParticipant(_ token: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+        joinAsParticipant(token) {
+            resolve(["success": true, "message": "Stage joined as participant"])
+        }
+    }
+
+    @objc(joinAsHost:withResolver:)
+    func joinAsHost(resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+        joinAsHost(onComplete: { success in
+            if success {
+                resolve(["success": true, "message": "Stage joined as host"])
+            } else {
+                reject("joinAsHost", "Could not join stage as host", nil)
+            }
+        })
+    }
+
 }

@@ -37,6 +37,11 @@ struct WelcomeView: View {
                 Button(action: {
                     isPresent.toggle()
                     isSetupPresent.toggle()
+
+                    // MARK: - React Native Event Emitter
+                    RNEventEmitter.shared?.sendEvent(withName: "onPress", body: [
+                      "data": ["screen": "WelcomeView", "action": "getStarted"]
+                    ])
                 }) {
                     Text("Get Started")
                         .modifier(PrimaryButton())

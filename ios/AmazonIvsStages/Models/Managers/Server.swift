@@ -34,6 +34,11 @@ class Server: NSObject, ObservableObject {
 
             do {
                 let stages = try self.decoder.decode([StageDetails].self, from: data)
+
+                // MARK: - React Native Event Emitter
+                RNEventEmitter.shared?.sendEvent(withName: "getAllStages", body: [
+                    "data": ["screen": "Server", "action": "getAllStages", "value": stages]
+                ])
                 onComplete(success, stages, errorMessage)
             } catch {
                 print("❌ \(error)")

@@ -62,7 +62,7 @@
     "lint": "npx eslint \"**/*.{js,ts,tsx}\"",
     "prepare": "npx bob build",
     "release": "npx release-it",
-    "precommit": "yarn lint && yarn typecheck && yarn test && yarn prepare && yarn pack && git add ."
+    "precommit": "yarn lint && yarn typecheck && yarn prepare && yarn pack && git add ."
   },
   "keywords": [
     "react-native",

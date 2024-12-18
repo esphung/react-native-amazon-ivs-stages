@@ -1,0 +1,1 @@
+{"version":3,"file":"RNEventEmitter.d.ts","sourceRoot":"","sources":["../../../../../src/RNEventEmitter/RNEventEmitter.ts"],"names":[],"mappings":"AAMA,iBAAS,cAAc,CACrB,SAAS,EAAE,MAAM,EACjB,QAAQ,EAAE,CAAC,GAAG,EAAE;IACd,IAAI,EAAE;QACJ,MAAM,CAAC,EAAE,MAAM,CAAC;QAChB,KAAK,CAAC,EAAE,MAAM,CAAC;QACf,KAAK,CAAC,EAAE,MAAM,CAAC;KAChB,CAAC;CACH,KAAK,IAAI,cASX;;;;AAED,wBAEE"}

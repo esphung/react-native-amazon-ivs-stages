@@ -7,8 +7,30 @@
 
 import SwiftUI
 
+func getApiUrl() -> String {
+    guard let plistURL = Bundle.main.url(forResource: "AmazonIvsStages", withExtension: "plist") else {
+        // Handle error if the plist file is not found
+        print("Error locating plist file")
+        return ""
+    }
+    // Load the plist file into a dictionary
+    guard let plistDictionary = NSDictionary(contentsOf: plistURL) else {
+        // Handle error if the dictionary cannot be created from the plist file
+        print("Error creating dictionary from plist file")
+        return ""
+    }
+    // Get the value for the key "apiUrl" from the dictionary
+    guard let key = plistDictionary["apiUrl"] as? String else {
+        // Handle error if the key is not found in the dictionary
+        print("Error getting apiUrl from plist file")
+        return ""
+    }
+    print("API_URL: \(key)")
+    return key
+}
+
 struct Constants {
-    static let API_URL = "https://5j27lyi8yb.execute-api.us-east-1.amazonaws.com/prod-raj0202844"
+    static let API_URL = getApiUrl()
 
     static let sourceCodeUrl = "https://github.com/aws-samples/amazon-ivs-multi-host-for-ios-demo"
 

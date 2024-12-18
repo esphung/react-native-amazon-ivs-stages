@@ -1,66 +1,48 @@
 # react-native-amazon-ivs-stages
 
-[![Version](https://img.shields.io/badge/version-0.0.1-blue.svg)](https://github.com/ThryvLabs/CommandCenterMobile/releases)
+[![Version](https://img.shields.io/badge/version-0.0.2-blue.svg)](https://github.com/ThryvLabs/CommandCenterMobile/releases)
 
 React Native bridge for multihost broadcasting on stages with Amazon IVS
 
 ## Usage
 
-```ts
-import {
-  // Server methods
-  getAllStages,
-  createStage,
-  deleteStage,
-  joinStage,
-  disconnectSync,
-} from 'react-native-amazon-ivs-stages';
+To bubble events taking place in the native views simply add an event listener after the action
 
-// ... Get all stages available
-getAllStages().then((res) => {
-  // some code here
-});
+```swift
+// ... in some button action or completion block code
 
-// ... Create a new stage as host
-createStage({
-  userId: 'test-user-id',
-  username: 'test-user',
-  avatarUrl:
-    'https://d39ii5l128t5ul.cloudfront.net/assets/animals_square/bear.png',
-}).then((res) => {
-  // some code here
-});
-
-// ... Delete current hosted stage
-deleteStage().then((res) => {
-  // some code here
-});
-
-// ... Join a stage as participant
-joinStage({
-  user: {
-    userId: 'test-user-id',
-    username: 'test-user',
-    avatarUrl:
-      'https://d39ii5l128t5ul.cloudfront.net/assets/animals_square/bear.png',
-  },
-  groupId: 'test-group-id',
-}).then((res) => {
-  // some code here
-});
-
-// ... Disconnect from participant from stage
-disconnectSync('test-participant-id', 'test-group-id', 'test-user-id');
+// MARK: - Send event to React Native from native iOS
+RNEventEmitter.shared?.sendEvent(withName: "onBtnPress", body: [
+    "data": [
+        "screen": "HomeScreen",
+        "action": "signUp"
+        "value": ["username": "foo", "password": "bar"]
+    ]
+])
 ```
 
-Show Native Amazon IVS Broadcast camera view
+In RN use the `useRNEventSubscriptions` hook anywhere the events need to be subscribed
 
 ```ts
-import { DemoApp } from 'react-native-amazon-ivs-stages';
+// define a handler to take action on event updates
+const onSubscribedEventEmitted: SubscribedEventEmittedFunc = React.useCallback(
+  (event) => {
+    // do something with the event data here
+  },
+  []
+);
 
-// ... For testing POC
+// start listening after passing the handler into the hook on initialization
+const { startListening } = useRNEventSubscriptions(onSubscribedEventEmitted);
 
-return <DemoApp />
+// cleanup the listeners by invoking the returned function from `startListening`
+React.useEffect(() => {
+  const removeListeners = startListening();
+  return () => {
+    removeListeners();
+  };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
 ```
 
 ## Integration
@@ -69,13 +51,37 @@ How to add this library to your React Native app
 
 #### Notes
 
-- Permissions MUST be granted for camera AND microphone before broadcast view is show
+- Permissions MUST be granted for camera AND microphone before broadcast view is shown
 
 #### For iOS
 
-##### Update your `Info.plist`
+Create a `./ios/AmazonIvsStages.plist` file and add your api url
 
 ```plist
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>apiUrl</key>
+  <string>https://some-url.com/stuff</string>
+</dict>
+</plist>
+```
+
+#### For Android
+
+Create a file called `./android/app/src/main/res/values/strings.xml` and add the value for the api url to it
+
+```xml
+<resources>
+    <string name="app_name">AmazonIvsStagesExample</string>
+    <string name="apiUrl">https://some-url.com/stuff</string>
+</resources>
+```
+
+##### Update your `./ios/<YOUR_APP_NAME_FOLDER>/Info.plist`
+
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">

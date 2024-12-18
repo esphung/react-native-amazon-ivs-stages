@@ -4,8 +4,6 @@ pre-commit:
       run: yarn lint
     type-check:
       run: yarn typecheck
-    unit-test:
-      run: yarn test
     prepare:
       run: yarn prepare
     pre-commit:

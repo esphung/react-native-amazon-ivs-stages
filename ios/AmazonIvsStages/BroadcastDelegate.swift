@@ -24,6 +24,10 @@ class BroadcastDelegate: UIViewController, IVSBroadcastSession.Delegate {
                     fatalError()
             }
         }
+        // MARK: - React Native Event Emitter
+        RNEventEmitter.shared?.sendEvent(withName: "broadcastSession", body: [
+            "data": ["state": state.text, "action": "didChange", "screen": "BroadcastDelegate"]
+        ])
     }
 
     func broadcastSession(_ session: IVSBroadcastSession, didEmitError error: Error) {
@@ -31,6 +35,11 @@ class BroadcastDelegate: UIViewController, IVSBroadcastSession.Delegate {
         DispatchQueue.main.async { [weak self] in
             self?.viewModel?.appendErrorNotification(error.localizedDescription)
         }
+
+        // MARK: - React Native Event Emitter
+        RNEventEmitter.shared?.sendEvent(withName: "broadcastSession", body: [
+            "data": ["error": error.localizedDescription, "action": "didEmitError", "screen": "BroadcastDelegate"]
+        ])
     }
 }
 

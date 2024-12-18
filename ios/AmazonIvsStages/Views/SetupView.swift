@@ -64,6 +64,14 @@ struct SetupView: View {
                     withAnimation {
                         isStageListPresent.toggle()
                     }
+
+                    // MARK: - React Native Event Emitter
+                    RNEventEmitter.shared?.sendEvent(withName: "onPress", body: [
+                      "data": ["screen": "SetupView", "action": "signIn", "value": [
+                        "username": username,
+                        "avatarUrl": avatarUrl
+                      ]]
+                    ])
                 }) {
                     Text("Sign in")
                         .modifier(PrimaryButton())

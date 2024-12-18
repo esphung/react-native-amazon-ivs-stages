@@ -1,3 +1,3 @@
 export * from './AmazonIvsStages';
-export * from './IVSBroadcastCameraView';
-export * from './Server';
+export * from './MultihostAppView';
+export * from './RNEventEmitter';

@@ -1,159 +1,44 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import {
-  Button,
-  Platform,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  type ButtonProps,
-} from 'react-native';
-import { DemoApp, useStore } from 'react-native-amazon-ivs-stages';
-import userAvatarUrls from '../../src/constants/userAvatarUrls';
+  MultihostAppViewProxy,
+  useRNEventSubscriptions,
+  type SubscribedEventEmittedFunc,
+} from 'react-native-amazon-ivs-stages';
 
-const App = (): React.JSX.Element => {
-  const [isMultihostAppVisible, setIsMultihostAppVisible] =
-    useState<boolean>(true);
+export default function App() {
+  // callbacks
+  const onSubscribedEventEmitted: SubscribedEventEmittedFunc =
+    React.useCallback((_) => {
+      // do something with the event here
+    }, []);
 
-  const {
-    currentUser,
-    stageJoinDetails,
-    stageHostDetails,
-    onPressCreateNewStage,
-    onJoinStage,
-    onDisconnectSync,
-    refreshCurrentStageDetailsList,
-    stageDetailsState,
-    onClearAllState,
-    onDeleteStage,
-    createNewUser,
-  } = useStore();
+  // hooks
+  const { startListening } = useRNEventSubscriptions(onSubscribedEventEmitted);
 
-  const renderBtnItem = React.useCallback(({ item }: { item: ButtonProps }) => {
-    return <Button {...item} key={item.title} />;
+  // side effects
+  React.useEffect(() => {
+    const removeListeners = startListening();
+    return () => {
+      removeListeners();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const mainView = React.useMemo(
-    () => (
-      <View style={styles.container}>
-        <ScrollView>
-          {[
-            {
-              disabled: !currentUser,
-              title: 'Clear All State',
-              onPress: onClearAllState,
-            },
-            {
-              disabled: !!currentUser,
-              title: 'Create Fake User',
-              onPress: () => {
-                const avatarUrl = userAvatarUrls[0];
-                if (!avatarUrl) {
-                  console.error('No avatar url found');
-                  return;
-                }
-                createNewUser({
-                  username: 'test-user',
-                  avatarUrl,
-                });
-              },
-            },
-            {
-              disabled: !currentUser,
-              title: 'Get All Stages',
-              onPress: refreshCurrentStageDetailsList,
-            },
-            {
-              disabled: !currentUser || !!stageHostDetails?.groupId,
-              title: 'Create New Stage',
-              onPress: onPressCreateNewStage,
-            },
-            {
-              disabled: !stageHostDetails?.groupId,
-              title: 'Delete Stage',
-              onPress: onDeleteStage,
-            },
-            {
-              disabled: !stageDetailsState.selected || !currentUser,
-              title: 'Join Stage',
-              onPress: onJoinStage,
-            },
-            {
-              disabled:
-                !stageJoinDetails?.stage?.id ||
-                !stageJoinDetails?.stage?.participantId,
-              title: 'Disconnect Sync',
-              onPress: onDisconnectSync,
-            },
-            {
-              title: 'Show DemoApp',
-              onPress: () => {
-                setIsMultihostAppVisible(true);
-              },
-            },
-          ].map((item) => renderBtnItem({ item }))}
-
-          <Text style={styles.text}>
-            user: {JSON.stringify(currentUser, null, 2)}
-          </Text>
-          <Text style={styles.text}>
-            stages: {JSON.stringify(stageDetailsState.stages, null, 2)}
-          </Text>
-          <Text style={styles.text}>
-            stageHostingDetails: {JSON.stringify(stageHostDetails, null, 2)}
-          </Text>
-          <Text style={styles.text}>
-            stageJoinDetails: {JSON.stringify(stageJoinDetails, null, 2)}
-          </Text>
-        </ScrollView>
-      </View>
-    ),
-    [
-      currentUser,
-      onClearAllState,
-      refreshCurrentStageDetailsList,
-      stageHostDetails,
-      onPressCreateNewStage,
-      onDeleteStage,
-      stageDetailsState.selected,
-      stageDetailsState.stages,
-      onJoinStage,
-      stageJoinDetails,
-      onDisconnectSync,
-      createNewUser,
-      renderBtnItem,
-    ]
-  );
-
-  const multihostAppView = React.useMemo(() => {
-    return <DemoApp />;
-  }, []);
-
-  const currentView = React.useMemo(() => {
-    return isMultihostAppVisible ? multihostAppView : mainView;
-  }, [isMultihostAppVisible, mainView, multihostAppView]);
 
   return (
-    <SafeAreaView style={styles.safeAreaContainer}>{currentView}</SafeAreaView>
+    <SafeAreaView style={styles.safeAreaContainer}>
+      <MultihostAppViewProxy style={styles.container} />
+    </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  safeAreaContainer: {
-    flex: 1,
-    marginTop: Platform.OS === 'ios' ? 40 : undefined, // for iOS notch
-  },
   container: {
     flex: 1,
+    // TODO: replace with safe area insets
+    marginHorizontal: 20,
   },
-  centeredView: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    color: 'white',
+  safeAreaContainer: {
+    flex: 1,
   },
 });
-
-export default App;

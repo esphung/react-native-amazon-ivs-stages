@@ -1,1 +1,1 @@
-export * from './AmazonIvsStages';
+export * from './AmazonIvsStages.module';

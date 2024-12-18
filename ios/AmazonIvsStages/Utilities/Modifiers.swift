@@ -30,7 +30,7 @@ struct SecondaryButton: ViewModifier {
         content
             .frame(maxWidth: .infinity)
             .padding(.vertical, 15)
-            .foregroundColor(isEnabled ? Color("Yellow") : Color.gray)
+            .foregroundColor(isEnabled ?Color("Yellow") : Color.gray)
             .font(Constants.fAppSecondary)
     }
 }
@@ -58,7 +58,7 @@ struct Title: ViewModifier {
             .padding(.vertical, 12)
             .multilineTextAlignment(.center)
             .font(Constants.fAppTitle)
-            .foregroundColor(.white)
+            .foregroundColor(.black)
     }
 }
 
@@ -68,7 +68,7 @@ struct TitleLeading: ViewModifier {
             .padding(.vertical, 12)
             .padding(.horizontal, 16)
             .font(Constants.fAppTitle)
-            .foregroundColor(.white)
+            .foregroundColor(.black)
     }
 }
 
@@ -79,7 +79,7 @@ struct TitleRegular: ViewModifier {
             .padding(.horizontal, 16)
             .multilineTextAlignment(.center)
             .font(Constants.fAppPrimaryRegular)
-            .foregroundColor(.white)
+            .foregroundColor(.black)
     }
 }
 
@@ -108,7 +108,7 @@ struct InputTitle: ViewModifier {
         content
             .padding(.vertical, 6)
             .font(Constants.fAppPrimary)
-            .foregroundColor(.white)
+            .foregroundColor(.black)
     }
 }
 
@@ -117,7 +117,7 @@ struct InputTitleSmall: ViewModifier {
         content
             .padding(.vertical, 6)
             .font(Constants.fAppPrimarySmall)
-            .foregroundColor(.white)
+            .foregroundColor(.black)
     }
 }
 

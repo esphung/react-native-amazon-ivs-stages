@@ -1,0 +1,1 @@
+{"version":3,"names":["default","useRNEventSubscriptions"],"sourceRoot":"../../../src","sources":["RNEventEmitter/index.ts"],"mappings":";;AAAA,cAAc,qBAAkB;AAChC,SAASA,OAAO,IAAIC,uBAAuB,QAAQ,oCAAiC;AACpF,cAAc,oCAAiC","ignoreList":[]}
