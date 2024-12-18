@@ -1,6 +1,6 @@
 # react-native-amazon-ivs-stages
 
-[![Version](https://img.shields.io/badge/version-0.0.3-blue.svg)](https://github.com/ThryvLabs/CommandCenterMobile/releases)
+[![Version](https://img.shields.io/badge/version-0.0.4-blue.svg)](https://github.com/ThryvLabs/CommandCenterMobile/releases)
 
 React Native bridge for multihost broadcasting on stages with Amazon IVS
 
