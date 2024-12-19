@@ -1,95 +1,29 @@
 # react-native-amazon-ivs-stages
 
-[![Version](https://img.shields.io/badge/version-0.0.4-blue.svg)](https://github.com/esphung/react-native-amazon-ivs-stages/releases)
+## Setup
 
-React Native bridge for multihost broadcasting on stages with Amazon IVS
+Create a new project using [react-native-cli](https://github.com/react-native-community/cli)
 
-## Usage
+```bash
+npx react-native init AwesomeProject
 
-Listening to events from native
+cd AwesomeProject
 
-#### For iOS
+npm install react-native-amazon-ivs-stages
 
-```swift
-import SwiftUI
+bundle install
 
-struct WelcomeView: View {
-    @EnvironmentObject var services: ServicesManager
-    @Binding var isPresent: Bool
-    @Binding var isSetupPresent: Bool
-
-    var body: some View {
-        ZStack(alignment: .top) {
-            Color("Background")
-                .edgesIgnoringSafeArea(.all)
-            VStack(alignment: .center) {
-
-                Spacer()
-
-                Image("welcomeImage")
-                    .resizable()
-                    .frame(width: 82, height: 152)
-
-                Spacer()
-
-                Text("Amazon IVS Stages Demo")
-                    .modifier(Title())
-
-                Text("This demo app demonstrates how to use Amazon IVS Stages to broadcast a video call.")
-                    .modifier(Description())
-
-                Spacer()
-
-                Button(action: {
-                    isPresent.toggle()
-                    isSetupPresent.toggle()
-
-                    // MARK: - React Native Event Emitter
-                    RNEventEmitter.shared?.sendEvent(withName: "onPress", body: [
-                      // can be ANY data you want to recieve in React Native
-                      "data": ["screen": "WelcomeView", "action": "getStarted"]
-                    ])
-                }) {
-                    Text("Get Started")
-                        .modifier(PrimaryButton())
-                }
-                .padding(.horizontal, 8)
-
-                Link("View Source Code", destination: URL(string: Constants.sourceCodeUrl)!)
-                    .modifier(SecondaryButton())
-            }
-        }
-    }
-}
+(cd ios && pod install)
 ```
 
-#### For React Native
+Replace your `App.tsx` file content with the [example](https://github.com/esphung/react-native-amazon-ivs-stages/blob/main/example/src/App.tsx) code
 
 ```ts
-import React from 'react';
-import { StyleSheet } from 'react-native';
-import {
-  MultihostAppViewProxy,
-  useRNEventSubscriptions,
-  type SubscribedEventEmittedFunc,
-} from 'react-native-amazon-ivs-stages';
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import { MultihostAppViewProxy } from "react-native-amazon-ivs-stages";
 
 export default function App() {
-  const onNativeEventHandler: SubscribedEventEmittedFunc =
-    React.useCallback((eventData) => {
-      // do something with the event that fired in the native view
-      console.debug({ eventData });
-    }, []);
-
-  const { startListening } = useRNEventSubscriptions(onNativeEventHandler);
-
-  React.useEffect(() => {
-    const removeListeners = startListening();
-    return () => {
-      removeListeners();
-    };
-  }, []);
-
   return (
     <View style={styles.container}>
       <MultihostAppViewProxy style={styles.nativeView} />
@@ -103,44 +37,17 @@ const styles = StyleSheet.create({
   },
   nativeView: {
     flex: 1,
-  }
+  },
 });
-
 ```
 
-## Integration
+## iOS Setup
 
-#### For iOS
+Replace `ios/AwesomeProject/Images.xcassets` contents with the contents of the RN library's [`Images.xcassets`](https://github.com/esphung/react-native-amazon-ivs-stages/tree/main/example/ios/AmazonIvsStagesExample/Images.xcassets)
 
-Add Resources
-
-> Drag the `Assets.xcassets` contents from the iOS SDK demo (or the example app located in this repo) to your Xcode project. Without them there will be no colors or graphics
-
-Add Permissions
-
-> Update your `./ios/<YOUR_APP_NAME_FOLDER>/Info.plist`
-
-> Permissions MUST be requested and granted for camera AND microphone as soon as possible
+#### Create a `AmazonIvsStages.plist` file in the ios workspace and add the resource to the `Copy Bundle Resources` build phase
 
 ```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<!-- Previous Info.plist values -->
-	<key>NSCameraUsageDescription</key>
-	<string>Camera is required for video streaming</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Microphone is required for video streaming</string>
-</dict>
-</plist>
-```
-
-Add API_URL (needed for https requests to Amazon IVS services)
-
-> Create a `./ios/AmazonIvsStages.plist` file and add your api url
-
-```plist
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -151,76 +58,63 @@ Add API_URL (needed for https requests to Amazon IVS services)
 </plist>
 ```
 
-> After you've created the file open the ios project workspace:
+#### Update the Info.plist permissions for camera and microphone
 
-- Click on your project
-- Click on your target
-- Select Build Phases tab
-- Expand Copy Bundle Resources list item
-- Click '+' and select your newly created file (`AmazonIvsStages.plist`)
-
-#### For Android
-
-Create the file `./android/app/src/main/res/values/strings.xml` if it DNE and add the value for your api url to it
-
-```
-<resources>
-    <string name="app_name">AmazonIvsStagesExample</string>
-    <string name="apiUrl">https://some-url.com/stuff</string>
-</resources>
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <!-- Previous Info.plist values -->
+    <key>NSCameraUsageDescription</key>
+    <string>Camera is required for video streaming</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Microphone is required for video streaming</string>
+  </dict>
+</plist>
 ```
 
-## Setup
+## Start 🚀
 
-Setup the library for development
+```bash
+yarn start
 
-```sh
-rvm install "ruby-3.3.4"
-nvm install 20.18.0
-rvm use
-nvm use
+# for iOS
+yarn ios
 ```
 
-## Installation
+## More Usage
 
-```sh
-yarn example:bundle:install
-yarn example:install
+### Event Listening
+
+Add this to RN code
+
+```ts
+import { useRNEventSubscriptions } from 'react-native-amazon-ivs-stages';
+
+// ...
+
+const { startListening } = useRNEventSubscriptions((eventData) => {
+  // do something with the event that fired in the native view
+  console.debug({ eventData });
+});
+
+React.useEffect(() => {
+  const removeListeners = startListening();
+  return () => {
+    removeListeners();
+  };
+}, []);
+
+// ...
 ```
 
-#### For iOS
+Add this to iOS Swift code
 
-```sh
-yarn example:ios:pod
-```
-
-#### For Android
-
-```sh
-yarn example:android:wrapper
-```
-
-## Run
-
-```sh
-yarn example:start
-```
-
-#### For iOS
-
-```sh
-# open the example workspace in xcode and run the project
-yarn example:ios:workspace
-```
-
-## Deploy
-
-```sh
-# package the library and validate types and lint
-yarn precommit
-
-# from clean branch
-git checkout -b release/vX.X.X
-git push
-yarn release
+```swift
+// MARK: - React Native Event Emitter
+RNEventEmitter.shared?.sendEvent(withName: "onPress", body: [
+    // can be ANY data you want to recieve in React Native
+    "data": ["screen": "WelcomeView", "action": "getStarted"]
+])
 ```
