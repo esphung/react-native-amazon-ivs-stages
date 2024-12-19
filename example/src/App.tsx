@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import {
   MultihostAppViewProxy,
   useRNEventSubscriptions,
@@ -7,16 +7,16 @@ import {
 } from 'react-native-amazon-ivs-stages';
 
 export default function App() {
-  // callbacks
-  const onSubscribedEventEmitted: SubscribedEventEmittedFunc =
-    React.useCallback((_) => {
-      // do something with the event here
-    }, []);
+  const onNativeEventHandler: SubscribedEventEmittedFunc = React.useCallback(
+    (eventData) => {
+      // do something with the event that fired in the native view
+      console.debug({ eventData });
+    },
+    []
+  );
 
-  // hooks
-  const { startListening } = useRNEventSubscriptions(onSubscribedEventEmitted);
+  const { startListening } = useRNEventSubscriptions(onNativeEventHandler);
 
-  // side effects
   React.useEffect(() => {
     const removeListeners = startListening();
     return () => {
@@ -26,19 +26,17 @@ export default function App() {
   }, []);
 
   return (
-    <SafeAreaView style={styles.safeAreaContainer}>
-      <MultihostAppViewProxy style={styles.container} />
-    </SafeAreaView>
+    <View style={styles.container}>
+      <MultihostAppViewProxy style={styles.nativeView} />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // TODO: replace with safe area insets
-    marginHorizontal: 20,
   },
-  safeAreaContainer: {
+  nativeView: {
     flex: 1,
   },
 });
